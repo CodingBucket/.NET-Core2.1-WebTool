@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace WebTool.Core.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity GetById(int id);
+        TEntity Find(int id);
 
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<IEnumerable<TEntity>> Where(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);

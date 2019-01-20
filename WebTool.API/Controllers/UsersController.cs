@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebTool.Core.Interfaces;
 using WebTool.Core.Services.Interfaces;
-using WebTool.Core.ViewModels;
 
 namespace WebTool.API.Controllers
 {
@@ -22,15 +20,26 @@ namespace WebTool.API.Controllers
 
         // GET: api/users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetUsers()
+        public async Task<ActionResult> GetUsers()
         {
-            return await _userDataService.GetUserList();
+            var userList = await _userDataService.GetUserListAsync();
+            if (userList == null)
+            {
+                return NotFound();
+            }
+            return Ok(userList);
         }
 
-        // POST api/users
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // GET: api/users/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUser(long id)
         {
+            var user = await _userDataService.GetUserAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
         }
     }
 }

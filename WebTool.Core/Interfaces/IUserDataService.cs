@@ -6,6 +6,8 @@ namespace WebTool.Core.Interfaces
 {
     public interface IUserDataService
     {
-        Task<IEnumerable<UserViewModel>> GetUserList();
+        Task<List<UserViewModel>> GetUserListAsync();
+
+        Task<UserViewModel> GetUserAsync(long userId);
     }
 }
